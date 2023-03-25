@@ -9,28 +9,38 @@ app.use(cors());
 
 let posts = {};
 
-app.get("/posts", (req, res) => {
-  res.send(posts);
-});
-
-app.post("/events", async (req, res) => {
-  const { type, data } = req.body;
+const handleEvents = (type, data) => {
   if (type === "PostCreated") {
     const { id, title } = data;
     posts[id] = { id, title, comments: [] };
   }
 
   if (type === "CommentCreated") {
-    const { id, content, postId } = data;
-    console.log(data);
-    posts[postId].comments.push({
-      id,
-      content,
-      postId,
-    });
+    posts[data.postId].comments.push(data);
   }
-  console.log("Event: ", type);
+
+  if (type === "CommentUpdated") {
+    const index = posts[data.postId].comments.findIndex(
+      (item) => item.id === data.id
+    );
+    posts[data.postId].comments[index] = data;
+  }
+};
+
+app.get("/posts", (req, res) => {
+  res.send(posts);
+});
+
+app.post("/events", async (req, res) => {
+  const { type, data } = req.body;
+  handleEvents(type, data);
   res.send({});
 });
 
-app.listen(4002, console.log("query server running at 4002"));
+app.listen(4002, async () => {
+  console.log("query server running at 4002");
+  const res = await axios.get("http://localhost:4005/events").catch((e) => {});
+  res.data.forEach((item) => {
+    handleEvents(item.type, item.data);
+  });
+});
