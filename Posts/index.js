@@ -25,7 +25,7 @@ app.post("/post", async (req, res) => {
   const post = posts[posts.length - 1];
 
   await axios
-    .post("http://localhost:4005/event", {
+    .post("http://event-bus-srv:4005/event", {
       type: "PostCreated",
       data: post,
     })
@@ -39,4 +39,7 @@ app.post("/events", (req, res) => {
   res.send({});
 });
 
-app.listen(4000, console.log("posts server running at 4000"));
+app.listen(4000, () => {
+  console.log("a few more");
+  console.log("posts server running at 4000");
+});
