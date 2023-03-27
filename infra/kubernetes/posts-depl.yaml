@@ -15,3 +15,18 @@ spec:
       containers:
         - name: posts
           image: hussaf/posts:0.0.2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-cluster-ip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4005
+      targetPort: 4005
