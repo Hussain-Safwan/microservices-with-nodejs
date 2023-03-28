@@ -30,7 +30,7 @@ app.post("/post", async (req, res) => {
       data: post,
     })
     .catch((e) => {});
-
+  console.log("Event broadcast");
   res.send(post);
 });
 
@@ -40,6 +40,5 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(4000, () => {
-  console.log("a few more");
-  console.log("posts server running at 4000");
+  console.log("V2: posts server running at 4000");
 });

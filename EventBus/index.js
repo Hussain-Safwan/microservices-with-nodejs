@@ -16,6 +16,7 @@ app.get("/events", (req, res) => {
 
 app.post("/event", (req, res) => {
   const event = req.body;
+  console.log(event);
   events.push(event);
   axios.post("http://posts-cluster-ip-srv:4000/events", event).catch((e) => {});
   // axios.post("http://localhost:4001/events", event).catch((e) => {});
@@ -25,4 +26,4 @@ app.post("/event", (req, res) => {
   res.status(200).send({ message: "OK" });
 });
 
-app.listen(4005, console.log("event-bus server running at 4005"));
+app.listen(4005, console.log("v2: event-bus server running at 4005"));
