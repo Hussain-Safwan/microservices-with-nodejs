@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: event-bus
-          image: hussaf/eventbus:latest
+          image: hussaf/event-bus:latest
 
 ---
 apiVersion: v1

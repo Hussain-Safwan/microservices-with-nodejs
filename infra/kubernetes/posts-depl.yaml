@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: posts
-          image: hussaf/posts:0.0.2
+          image: hussaf/posts:latest
 
 ---
 apiVersion: v1
